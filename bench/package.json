@@ -1,0 +1,12 @@
+{
+  "name": "leapwire-bench",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "proxy": "node rtt-proxy.mjs",
+    "run": "node run.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "24.43.1"
+  }
+}
