@@ -1,0 +1,31 @@
+name: Bug report
+description: Something behaves differently from the README
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The endpoints of the screen, the requests the client sent with their Leapwire headers, and what the bundle contained.
+      render: java
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: Leapwire 0.1.0, Spring Boot 4.1.2, JDK 21, Chrome 142 or React Native 0.81
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or stack trace
+      render: text

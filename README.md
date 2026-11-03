@@ -1,5 +1,8 @@
 # Leapwire
 
+[![CI](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml/badge.svg)](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 **Screens that load in one round trip instead of six, without changing your code.** Leapwire is a Spring Boot starter and a small npm package. The server learns, from ordinary traffic, which API calls a screen makes after each other, and once it is sure, it answers the first call with the whole chain in one streamed response.
 
 ## The problem: request waterfalls
@@ -128,6 +131,10 @@ cd bench && node run.mjs
 
 - **Server:** 45 tests on a real Tomcat: the exact bundle lines after learning, activation thresholds, list bindings in every join mode, depth and request limits, the deadline, `@LeapwireSkip`, context paths, byte-identical passthrough, and Spring Security isolation between two users.
 - **Client:** 73 tests: header injection, streaming across random chunk boundaries (property-based), serve-once cache, waiting for planned parts, timeouts, aborts, malformed bundles, buffered mode for React Native, install and uninstall.
+
+## Contributing and security
+
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and the [changelog](CHANGELOG.md).
 
 ## License
 
