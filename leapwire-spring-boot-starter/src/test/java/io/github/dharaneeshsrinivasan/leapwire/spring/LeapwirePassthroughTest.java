@@ -40,7 +40,7 @@ class LeapwirePassthroughTest {
         plain = new SpringApplicationBuilder(TestApplication.class)
                 .properties("server.port=0", "leapwire.enabled=false")
                 .run();
-        plainPort = Integer.parseInt(plain.getEnvironment().getProperty("local.server.port"));
+        plainPort = plain.getEnvironment().getRequiredProperty("local.server.port", Integer.class);
         for (int i = 0; i < 10; i++) {
             Wire.Page page = Wire.Page.open(port, List.of("alice", "bob", "carol").get(i % 3), ROUTE);
             page.json("/api/orders/42");

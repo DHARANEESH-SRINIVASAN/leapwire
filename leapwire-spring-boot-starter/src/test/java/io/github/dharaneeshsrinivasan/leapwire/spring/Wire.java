@@ -28,7 +28,7 @@ final class Wire {
 
     static <T> HttpResponse<T> send(int port, String path, HttpResponse.BodyHandler<T> handler, String... headers) {
         HttpRequest.Builder request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + path));
-        for (int i = 0; i < headers.length; i += 2) {
+        for (int i = 0; i + 1 < headers.length; i += 2) {
             request.header(headers[i], headers[i + 1]);
         }
         try {

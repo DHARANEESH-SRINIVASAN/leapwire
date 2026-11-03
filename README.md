@@ -31,13 +31,13 @@ Your controllers and your React code stay exactly as they are.
 
 ## Results
 
-Measured in headless Chrome against the [example app](leapwire-example): the 6-call order screen above, Spring Security with HTTP basic, H2, 25 ms of work per handler. Network delay comes from a TCP proxy that adds half the round trip in each direction, and Chrome is throttled to 1.6 Mbps down and 750 kbps up. Medians of 15 page loads per row, alternating two users, after 12 training loads (i7-1255U, JDK 25.0.5, Chrome 156, default settings).
+Measured in headless Chrome against the [example app](leapwire-example): the 6-call order screen above, Spring Security with HTTP basic, H2, 25 ms of work per handler. Network delay comes from a TCP proxy that adds half the round trip in each direction, and Chrome is throttled to 1.6 Mbps down and 750 kbps up. Medians of 15 page loads per row, alternating two users, after 12 training loads (i7-1255U, JDK 25.0.5, Chrome 156, default settings, `bench/run.mjs`).
 
 | Round trip | Without Leapwire | With Leapwire | Faster | Requests |
 |---:|---:|---:|---:|---:|
 | 40 ms | 382 ms | **187 ms** | 2.0× | 6 → **1** |
-| 150 ms | 945 ms | **295 ms** | 3.2× | 6 → **1** |
-| 300 ms | 1,695 ms | **443 ms** | 3.8× | 6 → **1** |
+| 150 ms | 945 ms | **294 ms** | 3.2× | 6 → **1** |
+| 300 ms | 1,687 ms | **443 ms** | 3.8× | 6 → **1** |
 
 Every one of the 90 Leapwire page loads showed exactly the data the same user gets without Leapwire, and all 75 pushed responses were used: no speculative request was wasted. The gain grows with the depth of the chain and the latency of the network. A screen whose requests are already independent, or a fast office network, gains much less.
 
@@ -120,12 +120,14 @@ java -cp "target/classes:$(cat target/cp.txt)" io.github.dharaneeshsrinivasan.le
   --server.port=8099 --example.delay=25ms --spring.web.resources.static-locations=file:../bench/web/
 ```
 
-In two more terminals:
+In two more terminals (the benchmark needs Node 22.4 or newer and Chrome, and has no dependencies: it drives Chrome over the DevTools protocol):
 
 ```sh
-cd bench && npm ci && LISTEN=8098 TARGET=8099 node rtt-proxy.mjs
+cd bench && LISTEN=8098 TARGET=8099 node rtt-proxy.mjs
 cd bench && node run.mjs
 ```
+
+Set `CHROME` to the Chrome binary if it is not `/usr/bin/google-chrome`.
 
 ## Tests
 

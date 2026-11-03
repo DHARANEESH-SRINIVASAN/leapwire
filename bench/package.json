@@ -2,11 +2,11 @@
   "name": "leapwire-bench",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.4"
+  },
   "scripts": {
     "proxy": "node rtt-proxy.mjs",
     "run": "node run.mjs"
-  },
-  "devDependencies": {
-    "puppeteer-core": "24.43.1"
   }
 }
