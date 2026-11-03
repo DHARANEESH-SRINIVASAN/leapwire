@@ -1,5 +1,7 @@
 # Leapwire
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dharaneesh-srinivasan/leapwire-spring-boot-starter?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.dharaneesh-srinivasan/leapwire-spring-boot-starter)
+[![npm](https://img.shields.io/npm/v/leapwire)](https://www.npmjs.com/package/leapwire)
 [![CI](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml/badge.svg)](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
@@ -43,11 +45,17 @@ Every one of the 90 Leapwire page loads showed exactly the data the same user ge
 
 ## Quick start
 
-Leapwire is not on Maven Central or npm yet. Build it from source with `mvn install` and `cd js && npm ci && npm run build`.
-
 ### Spring Boot
 
-Add `io.github.dharaneesh-srinivasan:leapwire-spring-boot-starter` to a Spring MVC application. It configures itself and does nothing for requests that do not come from the client package.
+```xml
+<dependency>
+  <groupId>io.github.dharaneesh-srinivasan</groupId>
+  <artifactId>leapwire-spring-boot-starter</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+The starter configures itself in any Spring MVC application on Java 17 or newer and does nothing for requests that do not come from the client package.
 
 Mark endpoints that must never be fetched ahead of time, for example ones with side effects on GET:
 
@@ -58,6 +66,10 @@ Views views(@PathVariable long id) { ... }
 ```
 
 ### Browser and React
+
+```sh
+npm install leapwire
+```
 
 ```ts
 import { install } from "leapwire";
@@ -133,6 +145,16 @@ Set `CHROME` to the Chrome binary if it is not `/usr/bin/google-chrome`.
 
 - **Server:** 45 tests on a real Tomcat: the exact bundle lines after learning, activation thresholds, list bindings in every join mode, depth and request limits, the deadline, `@LeapwireSkip`, context paths, byte-identical passthrough, and Spring Security isolation between two users.
 - **Client:** 73 tests: header injection, streaming across random chunk boundaries (property-based), serve-once cache, waiting for planned parts, timeouts, aborts, malformed bundles, buffered mode for React Native, install and uninstall.
+
+## Verifying a release
+
+The starter on Maven Central is signed with the key `B9F0 51CF 9545 B2AB 7282 9518 908A 18CE E22E 2846` (keys.openpgp.org, keyserver.ubuntu.com). The npm package is published from GitHub Actions with provenance, and both carry build attestations:
+
+```sh
+gpg --verify leapwire-spring-boot-starter-0.1.0.jar.asc leapwire-spring-boot-starter-0.1.0.jar
+npm audit signatures
+gh attestation verify leapwire-spring-boot-starter-0.1.0.jar -R DHARANEESH-SRINIVASAN/leapwire
+```
 
 ## Contributing and security
 
