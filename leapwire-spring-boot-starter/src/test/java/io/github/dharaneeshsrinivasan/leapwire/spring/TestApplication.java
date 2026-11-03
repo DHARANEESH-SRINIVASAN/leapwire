@@ -14,6 +14,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootApplication
 public class TestApplication {
@@ -132,6 +134,9 @@ public class TestApplication {
 
         @GetMapping("/api/orders/{id}")
         Order order(@PathVariable long id) {
+            if (id < 0 || id > 1_000_000) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
             calls.touch("order");
             return new Order(id, id + 100, id + 200, id + 300, id + 400, id + 500, "PAID");
         }
@@ -148,6 +153,9 @@ public class TestApplication {
 
         @GetMapping("/api/orders/{id}/lines")
         List<Line> lines(@PathVariable long id) {
+            if (id < 0 || id > 1_000_000) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
             return List.of(new Line(id * 100 + 1, 1), new Line(id * 100 + 2, 2));
         }
 
@@ -163,6 +171,9 @@ public class TestApplication {
 
         @GetMapping("/api/users/{id}")
         User user(@PathVariable long id) {
+            if (id < 0 || id > 1_000_000) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
             return new User(id, id * 6);
         }
 
@@ -189,6 +200,9 @@ public class TestApplication {
 
         @GetMapping("/api/variant/{id}")
         ResponseEntity<?> variant(@PathVariable long id, @RequestParam(defaultValue = "json") String as) {
+            if (id < 0 || id > 1_000_000) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
             if (as.equals("text")) {
                 return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("variant " + id);
             }
@@ -200,6 +214,9 @@ public class TestApplication {
 
         @GetMapping("/api/tagged/{id}")
         ResponseEntity<String> tagged(@PathVariable long id) {
+            if (id < 0 || id > 1_000_000) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
             String pretty = "{\n  \"id\" : " + id + ",\n  \"customerId\" : " + (id + 100)
                     + ",\n  \"price\" : 1.50\n}\n";
             return ResponseEntity.ok()
