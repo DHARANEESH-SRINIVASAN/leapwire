@@ -1,0 +1,12 @@
+{
+  "name": "leapwire-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w leapwire",
+    "test": "npm run test -w leapwire"
+  }
+}
