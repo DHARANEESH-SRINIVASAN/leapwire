@@ -5,7 +5,7 @@
 [![CI](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml/badge.svg)](https://github.com/DHARANEESH-SRINIVASAN/leapwire/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-**Screens that load in one round trip instead of six, without changing your code.** Leapwire is a Spring Boot starter and a small npm package. The server learns, from ordinary traffic, which API calls a screen makes after each other, and once it is sure, it answers the first call with the whole chain in one streamed response.
+**A screen's whole chain of dependent API calls in one round trip, without changing your code.** Leapwire is a Spring Boot starter and a small npm package. The server learns, from ordinary traffic, which API calls a screen makes after each other, and once it is sure, it answers the first call with the whole chain in one streamed response.
 
 ## The problem: request waterfalls
 
@@ -29,7 +29,7 @@ Every step waits a full network round trip. On a phone at 150 ms that is close t
 3. **Streams.** The first answer goes out immediately, followed by each learned answer the moment it is ready, as NDJSON lines ([protocol](docs/PROTOCOL.md)).
 4. **Serves from memory.** The npm package wraps `fetch`: it returns the first answer to your code as a normal `Response` and keeps the others for a few seconds. When your code asks for `/api/customers/20`, the answer is already there.
 
-Your controllers and your React code stay exactly as they are.
+Your controllers and your React code stay exactly as they are. Nothing is configured per endpoint: chains of any length, branches and lists of ids are learned from traffic, and a chain longer than `leapwire.max-depth` continues in the response to the next request. The six-call screen below is only the measured example.
 
 ## Results
 
